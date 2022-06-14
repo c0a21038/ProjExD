@@ -1,5 +1,4 @@
 import random
-from re import A
 
 
 turn = 5
@@ -17,12 +16,12 @@ def BuildQ():
     target_char = list()
     loss_char = list()
     for i in range(target_num):
-        target_r = random.randint(0,len(alp_list))
-        target_char.append(alp_list[target_r])
+        target_r = alp_list.pop(random.randint(0,len(alp_list)-1))
+        target_char.append(target_r)
     display_char = list(target_char)
     for j in range(loss_num):
-        loss_r = random.randint(0,len(display_char))
-        loss_char.append(display_char.pop(loss_r))
+        loss_r = display_char.pop(random.randint(0,len(display_char)-1))
+        loss_char.append(loss_r)
     
     return target_char,loss_char,display_char
 
