@@ -1,4 +1,5 @@
 import random
+import datetime
 
 
 turn = 5
@@ -8,8 +9,11 @@ alp_list = [chr(ord("A")+i) for i in range(26)]
 
 def main():
     for i in range(turn):
+        st = datetime.datetime.now()
         target,loss,display = BuildQ()
         if Kaitou(target,loss,display) == True:
+            ed = datetime.datetime.now()
+            print((ed - st).seconds)
             break
 
 def BuildQ():
