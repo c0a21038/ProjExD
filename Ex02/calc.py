@@ -5,23 +5,30 @@ def button_click(event):
     btn = event.widget
     num = btn["text"]
     #tkm.showinfo("", f"[{num}]ボタンが押されました")
-    entry.insert(tk.END, num)
+    if num == "=":
+        eqn = entry.get()
+        ans = eval(eqn)
+        entry.delete(0,tk.END)
+        entry.insert(tk.END, ans)
+    else:
+        entry.insert(tk.END, num)
+
 
 
 if __name__ == "__main__":
     root = tk.Tk()
     root.title("電卓")
-    root.geometry("300x600")
+    #root.geometry("300x600")
 
     entry = tk.Entry(root, 
                     justify="right", 
                     width=10, 
                     font=("Times New Roman", 40)
                     )
-    entry.grid(row=0, column=0, columnspan=3)
+    entry.grid(row=0, column=0, columnspan=3)  # 横方向に3マス結合
     
-    r,c = 1,0
-    for num in range(9, -1, -1):
+    r,c = 1,0  # r:行番号 c:列番号
+    for i, num in enumerate([9, 8, 7, 6 ,5 ,4 ,3 ,2 ,1 ,0 ,"+" ,"="]):
         btn = tk.Button(root,
                         text=f"{num}", 
                         width=4, 
@@ -32,7 +39,7 @@ if __name__ == "__main__":
         btn.grid(row=r, column=c)
         
         c += 1
-        if(num-1)%3 == 0:
+        if(i-2)%3 == 0:
             r += 1
             c = 0
     
