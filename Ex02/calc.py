@@ -53,7 +53,6 @@ if __name__ == "__main__":
         else:
             btn = tk.Button(root,
                             text=f"{num}", 
-                            #bg="#6495ED",
                             width=4, 
                             height=1, 
                             font=("Times New Roman", 30)
