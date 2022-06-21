@@ -1,17 +1,17 @@
 import tkinter as tk
 import tkinter.messagebox as tkm
-from turtle import right
 
 def button_click(event):
     btn = event.widget
     num = btn["text"]
-    tkm.showinfo("", f"[{num}]ボタンが押されました")
+    #tkm.showinfo("", f"[{num}]ボタンが押されました")
+    entry.insert(tk.END, num)
 
 
 if __name__ == "__main__":
     root = tk.Tk()
     root.title("電卓")
-    root.geometry("300x500")
+    root.geometry("300x600")
 
     entry = tk.Entry(root, 
                     justify="right", 
