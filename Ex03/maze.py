@@ -12,6 +12,7 @@ def key_up(event):
     global key
     key = ""
 
+
 def main_proc():
     global cx, cy, mx, my
     if key == "Up" and maze_bg[my-1][mx] == 0:
@@ -31,37 +32,24 @@ def main_proc():
     maze.after(120, main_proc)
     
 
-
 def make_goal(): #3方向が壁に囲まれた床にゴールを作成する関数
     global gx, gy
     while True: # 3方向が壁に囲まれた床をゴールとするまでの間
         gx = rdi(1,13) # ゴールの場所をランダムに設定
         gy = rdi(1,7)
+        gl = [maze_bg[gy+1][gx], maze_bg[gy-1][gx], maze_bg[gy][gx+1], maze_bg[gy][gx-1]] # ゴールの上下左右が壁か床かをリスト化
+        wc = 0 # ゴールの上下左右の壁の数
+        for i in range(4): 
+            if gl[i] == 1: # 壁だった場合wcを1増やす
+                wc += 1
+        if wc == 3: # 周囲3方向が壁で囲まれていた場合、ゴールの場所をオレンジにしゴールとする。
+            canvas.create_rectangle(gx*100, gy*100, gx*100+100, gy*100+100, 
+                                        fill = "orange") 
+            break
         
-        if maze_bg[gy][gx] == 0: # 設定されたゴールの場所が床であるならば
-            if maze_bg[gy+1][gx] == 1 and maze_bg[gy][gx-1] == 1 and maze_bg[gy][gx+1] == 1: # 下以外が壁だったら
-                canvas.create_rectangle(gx*100, gy*100, gx*100+100, gy*100+100, 
-                                        fill = "orange") # ゴールの場所をオレンジに
-                break
-            
-            elif maze_bg[gy-1][gx] == 1 and maze_bg[gy][gx-1] == 1 and maze_bg[gy][gx+1] == 1: # 上以外が壁だったら
-                canvas.create_rectangle(gx*100, gy*100, gx*100+100, gy*100+100, 
-                                        fill = "orange") # ゴールの場所をオレンジに
-                break
-            
-            elif maze_bg[gy+1][gx] == 1 and maze_bg[gy-1][gx] == 1 and maze_bg[gy][gx+1] == 1: # 左以外が壁だったら
-                canvas.create_rectangle(gx*100, gy*100, gx*100+100, gy*100+100, 
-                                        fill = "orange") # ゴールの場所をオレンジに
-                break
-            
-            elif maze_bg[gy+1][gx] == 1 and maze_bg[gy-1][gx] == 1 and maze_bg[gy][gx-1] == 1: # 右以外が壁だったら
-                canvas.create_rectangle(gx*100, gy*100, gx*100+100, gy*100+100, 
-                                        fill = "orange") # ゴールの場所をオレンジに
-                break
+        else:
+            continue   
 
-            else: # 壁が３方向にない場合
-                continue # 最初に戻る    
-        
 
 if __name__ == "__main__":
     maze = tk.Tk()
@@ -74,8 +62,7 @@ if __name__ == "__main__":
     canvas.pack()
     maze_bg = mm.make_maze(15, 9) # 1:壁/0:床を表す二次元リスト
     mm.show_maze(canvas, maze_bg) # 迷路を描画する
-    make_goal()
-
+    make_goal() # ゴールを作成
 
     koukaton = tk.PhotoImage(file = "fig/4.png")
     mx, my = 1, 1
