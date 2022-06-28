@@ -8,5 +8,12 @@ if __name__ == "__main__":
                       width = 1500,
                       height = 900,
                       bg = "black")
+    koukaton = tk.PhotoImage(file = "fig/4.png")
+    cx, cy = 300, 400
+    canvas.create_image(cx,
+                       cy,
+                       image = koukaton,
+                       tag = "koukaton"
+                       )
     canvas.pack()
     maze.mainloop()
