@@ -1,5 +1,13 @@
 import tkinter as tk
 
+def key_down(event):
+    global key
+    key = event.keysym
+    
+def key_up(event):
+    global key
+    key = ""
+
 if __name__ == "__main__":
     maze = tk.Tk()
     maze.title("迷えるこうかとん")
@@ -8,6 +16,7 @@ if __name__ == "__main__":
                       width = 1500,
                       height = 900,
                       bg = "black")
+    canvas.pack()
     koukaton = tk.PhotoImage(file = "fig/4.png")
     cx, cy = 300, 400
     canvas.create_image(cx,
@@ -15,5 +24,9 @@ if __name__ == "__main__":
                        image = koukaton,
                        tag = "koukaton"
                        )
-    canvas.pack()
+    
+    key = ""
+    maze.bind("<KeyPress>", key_down)
+    maze.bind("<KeyRelease>", key_up)
+
     maze.mainloop()
