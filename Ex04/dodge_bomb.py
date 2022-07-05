@@ -88,8 +88,8 @@ def main():
         count += 1
         if count%1500 == 0:
             if vx < 5.0:
-                vx *= 1.5
-                vy *= 1.5
+                vx *= 1.3
+                vy *= 1.3
 
                 
 
