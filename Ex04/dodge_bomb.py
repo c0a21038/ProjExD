@@ -1,9 +1,17 @@
 import pygame as pg
 import sys
 import random
+import tkinter as tk
+import tkinter.messagebox as tkm
+import math 
 
 def main():
     clock = pg.time.Clock()
+
+    # 経過時間のウィンドウを表示する際に生成される空のウィンドウを削除
+    root = tk.Tk()  
+    root.withdraw()
+    
 
     # 練習１
     pg.display.set_caption("逃げろ！こうかとん")
@@ -30,10 +38,14 @@ def main():
     # 練習６
     vx, vy = +1, +1
     
+    
     while True:
         screen_sfc.blit(bgimg_sfc, bgimg_rct)
         
-        
+        time = math.floor(pg.time.get_ticks()/1000)          # pygame.initが実行されてからの経過時間 
+        fonto = pg.font.Font(None, 80)                       # フォント設定用のオブジェクト
+        txt = fonto.render(f"time:{time}", True, (0 , 0, 0)) # 黒色で経過時間を書いたSurfaceを生成
+        screen_sfc.blit(txt, (100, 100))                     # 経過時間を書いたSurfaceを画面Surfaceに張り付ける
 
         # 練習２
         for event in pg.event.get():
@@ -41,6 +53,7 @@ def main():
                 return
 
         # 練習４
+        '''
         key_states = pg.key.get_pressed()
         if key_states[pg.K_UP] == True: kkimg_rct.centery -= 1
         if key_states[pg.K_DOWN] == True: kkimg_rct.centery += 1
@@ -52,8 +65,15 @@ def main():
             if key_states[pg.K_DOWN] == True: kkimg_rct.centery -= 1
             if key_states[pg.K_RIGHT] == True: kkimg_rct.centerx -= 1
             if key_states[pg.K_LEFT] == True: kkimg_rct.centerx += 1
+        '''
+        # マウスカーソルに合わせてこうかとんが動く
+        kx, ky = pg.mouse.get_pos()
+        kkimg_rct.centery = ky
+        kkimg_rct.centerx = kx
+        
         
         screen_sfc.blit(kkimg_sfc, kkimg_rct)
+        
 
         # 練習６
         bmimg_rct.move_ip(vx, vy)
@@ -66,6 +86,7 @@ def main():
 
         # 練習８
         if kkimg_rct.colliderect(bmimg_rct):
+            tkm.showinfo("GAMEOVER", f"{time}秒生存！") #経過した時間をウィンドウで表示
             return
 
         pg.display.update()
@@ -81,11 +102,11 @@ def check_bound(rct, scr_rct):
     if rct.left < scr_rct.left or scr_rct.right < rct.right: yoko = -1 # 領域外
     if rct.top < scr_rct.top or scr_rct.bottom < rct.bottom: tate = -1 # 領域外
     return yoko, tate
-
-
+    
 
 if __name__ == "__main__":
     pg.init()
     main()
     pg.quit()
     sys.exit()
+    
