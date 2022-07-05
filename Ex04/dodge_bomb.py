@@ -11,6 +11,7 @@ def main():
     # 経過時間のウィンドウを表示する際に生成される空のウィンドウを削除
     root = tk.Tk()  
     root.withdraw()
+    count = 0
     
 
     # 練習１
@@ -83,6 +84,14 @@ def main():
         yoko, tate = check_bound(bmimg_rct, screen_rct)
         vx *= yoko
         vy *= tate
+
+        count += 1
+        if count%1500 == 0:
+            if vx < 5.0:
+                vx *= 1.5
+                vy *= 1.5
+
+                
 
         # 練習８
         if kkimg_rct.colliderect(bmimg_rct):
