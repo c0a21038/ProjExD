@@ -128,7 +128,6 @@ class Beam: # こうかとんからビームを出す（実装途中）
         scr.sfc.blit(self.sfc, self.rct)
     
     def update(self, scr: Screen):
-        self.rct.move_ip(self.rct.centerx, self.rct.centery)
         self.rct.centerx += 10
         self.blit(scr)
 
@@ -139,7 +138,7 @@ def main():
     kkt = Bird("fig/6.png", 2.0, (900, 400))
     bkd = Bomb((255, 0, 0), 10, (+1, +1), scr)
     nbkd = NewBomb((255, 255, 0), 10, (+1, +1), scr)
-    beam = Beam((255, 255, 0), 10, kkt)
+    beam = None
     while True:
         scr.blit()
         time = Time(80, (0 ,0 , 0), (100, 100))
@@ -149,10 +148,12 @@ def main():
             if event.type == pg.QUIT:
                 return
             if event.type == pg.KEYDOWN and event.key == pg.K_SPACE:
-                beam.update(scr)
+                beam = Beam((255, 0, 255), 20, kkt)
         kkt.update(scr)
         bkd.update(scr)
         nbkd.update(scr, time)
+        if beam:
+            beam.update(scr)
         if kkt.rct.colliderect(bkd.rct) or kkt.rct.colliderect(nbkd.rct):
             time.gameover()
             return
