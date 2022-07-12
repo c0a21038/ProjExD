@@ -161,7 +161,7 @@ def main():
         clock.tick(1000)
 
 
-# 練習7
+
 def check_bound(rct, scr_rct):
     '''
     [1] rct: こうかとん or 爆弾のRect
